@@ -1,20 +1,14 @@
-document.addEventListener("DOMContentLoaded", function() {
-    function formatNumberWithCommas(number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
+const express = require('express');
+const path = require('path');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-    function calcularDineroRecibir() {
-        let montoEnviar = parseFloat(document.getElementById("fieldname2_3").value.replace(/\./g, '').replace(',', '.'));
-        let tipoCambio = parseFloat(document.getElementById("fieldname3_3").value);
-        const selectedOption = document.getElementById("fieldname3_3").options[document.getElementById("fieldname3_3").selectedIndex].text;
+app.use(express.static(path.join(__dirname)));
 
-        let monedaEnviar = "";
-        let monedaRecibir = "";
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'formulario.html'));
+});
 
-        if (isNaN(montoEnviar)) {
-            montoEnviar = 0;
-        }
-
-        if (selectedOption.includes("Colombia ► Argentina")) {
-            monedaEnviar = "COP";
-            monedaRecibir = "ARS";
+app.listen(PORT, () => {
+    console.log(`Servidor funcionando en http://localhost:${PORT}`);
+});
